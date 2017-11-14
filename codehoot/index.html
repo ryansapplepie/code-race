@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Sharpen your programming skills while racing others live!">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CodeRace</title>
+
+    <script src="/codemirror/codemirror.js"></script>
+    <script src="/codemirror/python/python.js"></script>
+    <script src="/jquery.min.js"></script>
+    <script src="/skulpt/skulpt.min.js" type="text/javascript"></script> 
+    <script src="/skulpt/skulpt-stdlib.js" type="text/javascript"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="/client.js"></script>
+
+    <link rel="stylesheet" href="/codemirror/codemirror.css">
+    <link rel="stylesheet" href="/codemirror/themes/3024-night.css">
+    <link rel="stylesheet" href="/codemirror/themes/cobalt.css">
+    <link rel="stylesheet" href="/codemirror/themes/monokai.css">
+    <link rel="stylesheet" href="/codemirror/themes/solarized.css">
+
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap-notify/bootstrap-notify.css"></script>
+    <link rel="stylesheet" href="/custom.css">
+    <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon">
+
+    <!-- Above lies the relevant scripts and css to be loaded, all local and not linked through a CDN). Meta tags are defined here as well -->
+
+    <!-- HTML exists on one page, index.html therefore markup is split into different templates using the ‘text/template’ type. 
+    With <script> tags this type can be defined and these templates of markup are ignored by the browser therefore are not shown until added as proper HTML format. These templates are all stored in the <head> rather than the <body> (apart from the notifications body). Although unethical it's to ensure the templates themselves are not detached as part of document.body.children. -->
+
+    <!--TITLE SCREEN -->
+    <script id="title-screen" type="text/template">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" id="homeBrand" href="#">
+              <img class="img-rounded" src="/icon/codehootIconCompressed.jpg">
+              <span id="brandHeader">Code<span class="subBrandHeader">Race</span> - <small>(Beta 1.0)</small></span>
+            </a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li class="navBarButton" id="hostGameButton"><a href="#">Host Game</a></li>
+              <li class="navBarButton" id="joinGameButton"><a href="#">Join Game</a></li>
+              <li class="navBarButton" id="instructionsButton"><a href="#">Instructions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <h5 id="navMsg" class="navbar-text">Sharpen your programming skills while racing others live!</h5>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        <div class="jumbotron text-center colouredJumbo">
+          <img class="img-rounded" src="/icon/codehootIconSecondVariationCompressed.png" width="100px" height="100px">
+          <h1 style="color: gray;">Code<span id="subJumboHeader">Race</span></h1>
+          <p class="lighterFont">Sharpen your programming skills while racing others live!</p> 
+          <button type="button" class="btn btn-danger" id="hostGameButton">Host Game</button>
+          <button type="button" class="btn btn-success" id="joinGameButton">Join Game</button>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="jumbotron">
+          <h2 style="color: gray;">What is Code<span class="subBrandHeader">Race</span>?</h2>
+          <h3 style="color: gray;">Who is it for?</h3>
+          <p class="lighterFont">Hobbyists. Students. <strong>Programmers</strong>.</p>
+          <h3 style="color: gray;">What is it for?</h3>
+          <p class="lighterFont">To <strong>compete against others live</strong>. Race to solve a major problem or a collection of smaller problems first!</p>
+          <h3 style="color: gray;">How does it differ from other sites such as HackerRank?</h3>
+          <p class="lighterFont">A CodeRace is <strong>short and frantic fun</strong> that lasts either 10 or 15 mins. No login required. Host or Join a game and get racing now!</p>
+          <h3 style="color: gray;">Why should I use it?</h3>
+          <p class="lighterFont">Refine your algorithm skills. Have fun with your programming. <strong>Be a better coder.</strong></p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="text-center">Code<span class="subBrandHeader">Race</span> was created by Ryan King. Still in beta and new features to be added.</h3>
+          </div>
+          <div class="panel-body text-center">
+            <a href="https://github.com/ryansapplepie"><img src="/icon/GitHubIcon.png" width="60px" height="60px"></a>
+
+            <!--<img src="/icon/Twitter_Logo_Blue.png" width="80px" height="80px">-->
+            &nbsp&nbsp<a href="https://pastebin.com/yJsKZRLN">OSS Licenses here</a>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- JOIN GAME -->
+    <script id="join-game-template" type="text/template">
+      <div class="row">
+        <div class="col-md-2 text-center col-md-offset-5">
+          <label for="gameId">Enter Game ID:</label>
+          <div class="input-group">
+            <input type="text" class="form-control input-lg" id="gameInput" onkeypress="return isProperNumberInput(event)" placeholder="eg. 41537" maxLength="5">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-lg" data-toggle="collapse" data-target="#lobbySelection" id="lobbySelectionButton">...</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="collapse" id="lobbySelection">
+        <br>
+        <h4 class="text-center"><a href="#" id="refreshLobbyListButton"><span class="glyphicon glyphicon-refresh"></span></a> - Current Games:</h4>
+        <ul class="list-group col-md-4 col-md-offset-4 loweredElement" id="lobbyList">
+        </ul>
+      </div>
+
+      <div class="col-md-4 text-center col-md-offset-4 loweredElement"> 
+         <label for="name">Enter Name:</label>
+         <input type="text" class="form-control input-lg" id="joinNameInput" placeholder="Name:" maxLength="25">
+         <button type="button" class="btn btn-success loweredElement" id="joinConfirm">Join!</button>
+      </div>
+    </script>
+
+    <!-- HOST GAME -->
+    <script id="host-game-template" type="text/template">
+     <div class="col-md-4 text-center col-md-offset-4 loweredElement">
+      <label for="name">Enter Name and Game Type</label>
+      <input type="text" class="form-control input-lg" id="nameInput" placeholder="Name:" maxLength="25">
+
+      <div class="dropdown btn-group loweredElement" id="gameTypeDropdownDiv">
+        <button class="btn btn-default dropdown-toggle" type="button" id="gameTypeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          3 Small Problems
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="gameTypeDropdown">
+          <li class="dropdown-header">Game Type:</li>
+          <li class="gameTypeOption"><a href="#">3 Small Problems</a></li>
+          <li class="gameTypeOption"> <a href="#">5 Small Problems</a></li>
+          <li class="gameTypeOption"><a href="#">One Major Problem</a></li>
+        </ul>
+      </div>
+      <br>
+      <button type="button" class="btn btn-danger loweredElement" id="hostConfirm">Host!</button>
+     </div>
+    </script>
+
+    <!-- INSTRUCTIONS -->
+    <script id="instructions-screen" type="text/template">
+      <div class="container">
+        <div class="jumbotron text-center colouredJumbo" style="background-color: #82ffd9;">
+          <h1 style="color: grey;">Quick Preamble:</h1>
+            <h4> - 10 players max per game.</h4>
+            <h4> - Basically Python 3.</h4>
+            <h4> - Enter all input before hitting 'Run'.</h4>
+            <h4> - Only the host can start the game, if disconnected will be reassigned to a different player.</h4>
+            <h4> - The player who finishes with the least amount of characters used for each successful submission and the least amount of failed submissions is given recognition at the end as well!</h4>
+            <h4> - Even after submitting a correct program, a player can edit to obtain a smaller character count before being accumulated to their overall count.</h4>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="jumbotron text-center">
+          <img class="img-rounded" src="/icon/screenshot.jpg" width="675px" height="375px">
+          <h4><span style="color: grey">1.</span> Problem Name and Timer</h4>
+          <h4><span style="color: grey">2.</span> Code Editor</h4>
+          <h4><span style="color: grey">3.</span> Theme and Problem Info Toggle + Execution/Submission of Program</h4>
+          <h4><span style="color: grey">4.</span> Input (above) and Output (below) boxes</h4>
+        </div>
+      </div>
+    </script>
+
+    <!-- LOBBY -->
+    <script id="lobby-screen" type="text/template">
+      <div class="page-header text-center">
+        <h2 id="idHeader">Game ID: </h2>
+        <h4 class="text-center" id="gameTypeHeader">GameType</h4>
+      </div>
+      <ul class="list-group col-md-4 col-md-offset-4 loweredElement" id="clientList">
+      </ul>
+      <button type="button" class="btn btn-info col-md-2 col-md-offset-5 text-center" id="startGame">Start Game!</button>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <div class="alert alert-warning alert-dismissable text-center">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Additional players on the same computer must be situated on <strong>seperate windows</strong>, not tabs within the same window. This can possibly cause a timer glitch within matches.
+      </div>
+    </script>
+
+    <!-- EDITOR COMPONENTS -->
+    <script id="editor-components" type="text/template">
+      <h1 class="text-center" id="outlineHeader"></h1>
+      <div class="progress" style="margin-top: 25px;">
+        <div class="progress-bar" id="timerBar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+          100
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-info" data-toggle="collapse" data-target="#problemInfo">Toggle Info</button>
+        <div class="dropdown btn-group">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="themeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Default
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="themeDropdown">
+            <li class="dropdown-header">Editor Theme:</li>
+            <li class="editorThemeOption" id="monokai"><a href="#">Monokai</a></li>
+            <li class="editorThemeOption" id="cobalt"><a href="#">Cobalt</a></li>
+            <li class="editorThemeOption" id="3024-night"><a href="#">Night</a></li>
+            <li class="editorThemeOption" id="solarized"><a href="#">Solarized</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="editorThemeOption" id="default"><a href="#">Default</a></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-success" id="runCode">Run</button>
+        <button type="button" class="btn btn-danger" id="submitCode">Submit</button>
+      </div>
+      <div class="collapse text-center well" id="problemInfo">
+        <h4>Problem Info:</h4>
+        <p id="problemInfoElement">Problem Info</p>
+        <div id="gameClientList">
+          <h4>Players:</h4>
+        </div>
+      </div>
+
+      <div class="container pagination-center" id="mirrorContainer">
+        <div id="codeEditor"></div>
+      </div>
+
+      <div class="container center-block">
+        <textarea class="col-md-4 col-md-offset-4" id="programInputField" style="resize:none; border-radius:5px; height: 60px"></textarea>
+        <pre class="col-md-4 col-md-offset-4" style="height: 100px;" id="programOutputField"></pre>
+      </div>
+    </script>
+
+    <!--- MODAL -->
+    <script id="modal-component" type="text/template">
+      <div class="modal fade" id="submitModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Checking Code</h4>
+            </div>
+            <div class="modal-body">
+              <div id="testCases"></div>
+              <h4 class="text-center hidden" id="subFrac"></h4>
+              <h1 class="text-center hidden" id="subVerdict"></h1>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-right hidden" id="nextProblem">Next</button>
+              <button type="button" class="btn btn-default pull-left hidden" id="sameProblem">Edit/Retry</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </script>
+
+    <!-- FINSHED ROUND SCREEN-->
+    <script id="finished-round" type="text/template">
+      <h1 class="display-4 text-center">Finshed! Nice Job. <br><small>Sit tight till the other players finish or time runs out...</small></h1>
+    </script>
+
+    <!-- GAME RESULTS SCREEN -->
+    <script id="results-screen" type="text/template">
+      <div class="page-header text-center">
+        <h2>Game Results:</h2>
+      </div>
+
+      <div class="container" id="resultsContainer">
+        <div class="jumbotron" id="1Jumbo">
+          <h1 class="hidden" id="1Header" style="color: #FFD700;">1st</h1>
+        </div>
+
+        <div class="jumbotron" id="2Jumbo">
+          <h1 class="hidden" id="2Header" style="color: #C0C0C0;">2nd</h1>
+        </div>
+
+        <div class="jumbotron" id="3Jumbo">
+          <h1 class="hidden" id="3Header" style="color: #CD7F32;">3rd</h1>
+        </div>
+        <button type="button" class="btn btn-primary btn-block pull-right" id="finishGameButton">Exit</button>
+      </div>
+    </script>
+  </head>
+  <body>
+    <!-- BODY: NOTIFICATIONS -->
+    <div class="notifications top-right"></div>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+{
+    "problems": [
+        {
+            "id": "p1",
+            "outline": "Print 'Hello, World'",
+            "info": "Simply output the string of characters: <code>Hello, World</code>. No Input.",
+            "testCases":[{"input": "", "output": "Hello, World"}]
+        },
+
+        {
+            "id": "p2",
+            "outline": "Twice as Much",
+            "info": "Input are two integers on two lines: <code>0 <= n <= 100</code>. After, output them doubled on two seperate lines.",
+            "testCases":[{"input": "2\n6", "output": "4\n12"}, {"input": "10\n20", "output": "20\n40"}]
+        },
+
+        {
+            "id": "p3",
+            "outline": "Odd One Out",
+            "info": "Input is a series of integers seperated by commas in random order eg <code>6,-7,15,9,98</code>: <code>-100 <= n <= 100</code>. Output the only odd number.",
+            "testCases":[{"input": "2,4,6,7,10", "output": "7"}, {"input": "2,16,98,10,13,78", "output": "13"}, {"input": "4,-8,98,-12,-19,90,100,120", "output": "-19"}]
+        },
+
+        {
+            "id": "p4",
+            "outline": "How much wood can a woodchuck chuck?",
+            "info": "Input is a string with a chain of <code>wood</code> & <code>chuck</code> embedded, eg:<code>woodchuckhuckwodchuckwoochudchuck</code><br><br> Output on one line the quantities of both words eg:<code>1 3</code>",
+            "testCases":[{"input": "woodchuckhuckwodchuckwoochudchuck", "output": "1 3"}, {"input": "woodchuckwoodwoo", "output": "2 1"}, {"input": "woooochuuck", "output": "0 0"}]
+        },
+
+        {
+            "id": "p5",
+            "outline": "Second Place",
+            "info": "Input first consists of an int <code>1 <= n <= 10</code> which is followed by a series of floats on n lines.<br><br> One float (each w/ 2 dp including trailing zeros) <code>0.00 <= f <= 25.00</code> per line each<br><br>Output the second highest float w/ 2 dp including trailing zeros eg <code>6.00</code> or <code><24.40</code>.",
+            "testCases":[{"input": "5\n15.25\n10.10\n20.50\n20.10\n1.25", "output": "20.10"}, {"input": "10\n1.50\n1.00\n25.00\n24.50\n5.00\n5.25\n6.00\n4.00\n22.98\n12.14", "output": "24.50"}]
+        },
+
+        {
+            "id": "p6",
+            "outline": "Counting Stars",
+            "info": "Input consists of one line of a string of various characters.<br><br> Output a single int representing the amount of <code>*</code> chars that don't appear in between an opening, then an escaping <code>!</code> char. <code>!</code> chars cannot act as both one that opens and escapes.",
+            "testCases":[{"input": "@#$%^&*(!**!*hfs*%***", "output": "6"}, {"input": "*!***!****!***!**!***!", "output": "7"}, {"input": "*14565@#$%^()7879809*!*!", "output": "2"}]
+        },
+
+        {
+            "id": "p7",
+            "outline": "The Fibonacci Numbers",
+            "info": "Input is a single int <code>1 <= n <= 20</code>. Output the first n numbers which includes <code>0</code> (with spaces in between) of the Fibbonacci sequence on a single line.<br><br><i>The Fibonaci sequence is a series of numbers in which each number is the sum of the two preceding numbers.</i>",
+            "testCases":[{"input": "5", "output": "0 1 1 2 3"}, {"input": "10", "output": "0 1 1 2 3 5 8 13 21 34"}, {"input": "20", "output": "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181"}]
+        },
+
+        {
+            "id": "p8",
+            "outline": "Fizz Buzz",
+            "info": "Input is a series of integers in ascending order eg<code>1,2,3,4,5,6</code>: <code>1 <= n <= 30</code>.<br><br> For each integer, output on a line either <code>Fizz</code>, <code>Buzz</code>, <code>Fizz Buzz</code> or <code>None</code> depending whether the int is a multiple of 3, 5, both or none",
+            "testCases":[{"input": "1,3,5,6,8,9,10", "output": "None\nFizz\nBuzz\nFizz\nNone\nFizz\nBuzz"}, {"input": "10,15,20", "output": "Buzz\nFizz Buzz\nBuzz"}]
+        },
+
+        {
+            "id": "p9",
+            "outline": "Palindromes",
+            "info": "Input is a single string all lower case. Output either <code>True</code> or <code>False</code> on whether the string is a palindrome or not.<br><br> <i>A Palindrome is a word which reads the same backwards as it does forwards.</i>",
+            "testCases":[{"input": "madam", "output": "True"}, {"input": "racecar", "output": "True"}, {"input": "modules", "output": "False"}, {"input": "pythonneohtyp", "output": "False"}]
+        },
+
+        {
+            "id": "p10",
+            "outline": "Hypotenuse",
+            "info": "Given an input (integers) of both the adjacent and opposite sides of a triangle<br> on one line seperated by space <code>1 <= a,o <= 50</code> eg<code>10m 15m</code><br><br>Output the hypotenuse rounded to the next whole number regardless of dp in the same format eg<code>18.543</code> becomes <code>18m</code>",
+            "testCases":[{"input": "5m 8m", "output": "10m"}, {"input": "30m 50m", "output": "59m"}, {"input": "2m 100m", "output": "101m"}]
+        },
+
+        {
+            "id": "p11",
+            "outline": "Rock, Paper, Scissors!",
+            "info": "Normal Rock, Paper, Scissors rules apply. Input is two moves representing two player 1 and 2, either <code>Rock</code>, <code>Paper</code> or <code>Scissors</code> seperated by a space.<br><br> Output either <code>Player 1 Wins!</code>, <code>Player 2 Wins!</code> or <code>Draw.</code>",
+            "testCases":[{"input": "Rock Paper", "output": "Player 2 Wins!"}, {"input": "Rock Rock", "output": "Draw."}, {"input": "Scissors Rock", "output": "Player 2 Wins!"}, {"input": "Rock Scissors", "output": "Player 1 Wins!"}, {"input": "Paper Scissors", "output": "Player 2 Wins!"}]
+        },
+
+        {
+            "id": "p12",
+            "outline": "Scissors, Paper, Rock?",
+            "info": "Input is two moves representing two player 1 and 2, either <code>Rock</code>, <code>Paper</code> or <code>Scissors</code> seperated by a space.<br><br> Output either <code>Player 1 Wins!</code>, <code>Player 2 Wins!</code> or <code>Draw.</code><br><br> Only difference is that the normal rules of Rock, Paper, Scissors are reversed.",
+            "testCases":[{"input": "Rock Paper", "output": "Player 1 Wins!"}, {"input": "Rock Rock", "output": "Draw."}, {"input": "Scissors Rock", "output": "Player 1 Wins!"}, {"input": "Rock Scissors", "output": "Player 2 Wins!"}, {"input": "Paper Scissors", "output": "Player 1 Wins!"}]
+        }
+    ],
+
+    "majorProblems": [
+        {
+            "id": "m1",
+            "outline": "The Olympic Games",
+            "info": "The modern summer Olympic Games were first held in 1896, and have been held at 4 yearly intervals since then, except during the two world wars (1914 to 1918 and 1939 to 1945). The next games are scheduled to be held in Tokyo in 4 years time.<br><br> Input will consist of a list of years, one per line, in the range 1860 to 2030 inclusive. The final year will be 0 – do not process that year.<br><br>Output is one line per year. The year is given followed by a space and:<br><br><code>Summer Olympics</code> - if the summer Olympic Games were held, or are scheduled to be held in that year.<br><br><code>Games cancelled</code> - if the summer games should have been held but there was a war.<br><br><code>No city yet chosen</code> - if it is a future summer Olympic year but no city has yet been awarded the games<br><br><code>No summer games</code> - otherwise",
+            "testCases":[{"input": "1896\n1902\n1916\n2024\n2016\n1941\n0", "output": "1896 Summer Olympics\n1902 No summer games\n1916 Games cancelled\n2024 No city yet chosen\n2016 Summer Olympics\n1941 Games cancelled"}]
+        },
+
+        {
+            "id": "m2",
+            "outline": "Nearly a Palindrome",
+            "info": "Input are three lines containing three strings all lower case. <br><br>For each line, if by removing only one character the string can become a palindrome, output <code>possible</code>, else <code>not possible</code>.<br><br> <i>A Palindrome is a word which reads the same backwards as it does forwards.</i>",
+            "testCases":[{"input": "radars\nrayon\nmadmam", "output": "possible\nnot possible\npossible"}, {"input": "pythonneohtyp\nracecar\nrracecaer", "output": "possible\npossible\nnot possible"}, {"input": "afbuttuba\navidditvaa\nannna", "output": "possible\nnot possible\npossible"}]
+        },
+
+        {
+            "id": "m3",
+            "outline": "Alkanes",
+            "info": "Alkanes are a type of organic carbon compound that consist of one parent and possibly multiple branch hydrocarbon chains.<br><br>The first and last carbon atoms will feature 3 H atoms (CH3) while the rest 2 H atoms (CH2).<br><br>Input is two lines containing integers <code>2 < ints < 10</code>.<br><br>First line has one int representing the amount of carbon atoms. Second line contains up to 3 ints with spaces in between and in any order. Each int represents which carbon atoms contain a branch of CH3, therefore replacing one of its H atoms. The first and last carbon atoms cannot have a branch. If this line contains <code>0</code> there are no branch chians. Each carbon atom can have a max of one branch.<br><br>Output the condensed structural formula with <code>-</code> to represent bonds in the parent chain. eg <code>5(new line here)2 3</code> should output <code>CH3-CHCH3-CHCH3-CH2-CH3</code>",
+            "testCases": [{"input": "6\n3 5", "output": "CH3-CH2-CHCH3-CH2-CHCH3-CH3"}, {"input": "4\n2 3", "output": "CH3-CHCH3-CHCH3-CH3"}, {"input": "3\n2", "output": "CH3-CHCH3-CH3"}, {"input": "9\n8 4 6", "output": "CH3-CH2-CH2-CHCH3-CH2-CHCH3-CH2-CHCH3-CH3"}]
+        },
+
+        {
+            "id": "m4",
+            "outline": "The Caesar Cipher",
+            "info": "Given an encrypted caesar cipher message can you uncover the original message?<br><br>Starting with a shift, it will increase by one each letter. It will cycle round so after 25 it will become 1 again. To decipher, the shift occurs in the opposite direction!<br><br> Input consists of a single integer, K, the key <code>1 <= K <= 25</code>, followed by a line of encrypted text. The text will be no more than 250 characters long, and will consist of lower case letters, spaces, digits and punctuation marks only. Only letters are to by deciphered.<br><br>Simply output the deciphered text.",
+            "testCases": [{"input": "19\ntvxzbdfikmoqsuwyacegikmoqs", "output": "abcdefghijklmnopqrstuvwxyz"}, {"input": "6\ngu mwmckchxee hkiwhbk ept wlj tle iolxnbs figzlvijgmh errykzb.", "output": "an encryption problem for the new zealand programming contest."}, {"input": "5\n1263!!", "output": "1263!!"}, {"input": "13\ngvt glave wnlum gqa nzswmm ygqe hwu csss ykdq.", "output": "the quick brown fox jumped over the lazy dogs."}]
+        },
+
+        {
+            "id": "m5",
+            "outline": "Roof Replacement",
+            "info": "The sports centre needs repair. Vandals have been kicking balls so hard into the roof that some of the tiles have started sticking up.<br><br> As a quick fix, the committee have decided to place another old roof over the top, if they can find one that fits. This is your job. A new roof will fit if it currently has a hole in it at the location where the old roof has a tile sticking up.<br><br>Sticking up tiles are represented by <code>/</code>. Holes in the new roof are represented by spaces <code>' '</code>. Any other character can not go over a sticking up tile.<br><br>Input are two lines. First line is the new roof a sequence of lowercase letters w/ spaces. Second line is the old roof, a sequence of <code>_</code> and <code>/</code>.<br><br>Output <code>It fits!</code> if the new roof fits, <code>It doesn't fit...</code>",
+            "testCases": [{"input": "  l   f l k djmi k\n___/_____//_____/_", "output": "It doesn't fit..."}, {"input": "    ikm il  h  llmmc   a i\n__/_______________________", "output": "It fits!"}, {"input": "   h c \n__/____", "output": "It fits!"}]
+        }
+
+    ]
+}
